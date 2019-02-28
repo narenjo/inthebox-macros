@@ -12,6 +12,12 @@ using tools.FunctionTool;
 using tools.MetadataTools;
 using tools.VariableTool;
 
+#if (openfl < "4.0.0")
+import openfl.utils.JNI;
+#else
+import lime.system.JNI;
+#end
+
 class Jni
 {
 	static var DYNAMIC = TPath({name:"Dynamic", pack:[], params:[], sub:null});
@@ -80,12 +86,12 @@ class Jni
 					#if (openfl || lime ||  nme)
 					if ($v{isStaticMethod})
 					{
-						$i{fieldName} = #if openfl openfl.utils#else lime.system#end.JNI.createStaticMethod(
+						$i{fieldName} = JNI.createStaticMethod(
 							$v{jniPackage}, $v{jniPrimitive}, $v{jniSignature});
 					}
 					else
 					{
-						$i{fieldName} = #if openfl openfl.utils#else lime.system#end.JNI.createMemberMethod(
+						$i{fieldName} = JNI.createMemberMethod(
 							$v{jniPackage}, $v{jniPrimitive}, $v{jniSignature});
 					}
 					#end
